@@ -32,7 +32,7 @@ khabri.ai is a premium, AI-driven news verification platform designed to combat 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/khabri-ai.git
+   git clone https://github.com/rachts/khabri.ai.git
    cd khabri-ai
    ```
 
