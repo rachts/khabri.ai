@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { NewsArticle } from "@/types";
-import { ExternalLink, Clock, Newspaper } from "lucide-react";
-import { motion } from "framer-motion";
+import { ExternalLink, Clock, Newspaper, Bot, Loader2, Sparkles, ChevronUp } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface NewsCardProps {
   article: NewsArticle;
@@ -28,6 +29,32 @@ function relativeTime(dateStr: string): string {
 }
 
 export default function NewsCard({ article, index }: NewsCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [aiSummary, setAiSummary] = useState<string | null>(null);
+  const [isSummarizing, setIsSummarizing] = useState(false);
+
+  const handleSummarize = async () => {
+    setIsExpanded(!isExpanded);
+    if (!aiSummary && !isExpanded) {
+      setIsSummarizing(true);
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: `Please provide a 2-3 sentence engaging summary of this news article: Title: ${article.title}. Description: ${article.description}`
+          }),
+        });
+        const data = await response.json();
+        setAiSummary(data.reply);
+      } catch {
+        setAiSummary("Failed to generate AI summary.");
+      } finally {
+        setIsSummarizing(false);
+      }
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -58,21 +85,62 @@ export default function NewsCard({ article, index }: NewsCardProps) {
       </h3>
 
       {/* Description */}
-      <p className="text-muted-foreground text-sm font-medium leading-relaxed mb-8 line-clamp-2">
+      <p className={`text-muted-foreground text-sm font-medium leading-relaxed mb-4 ${isExpanded ? '' : 'line-clamp-2'}`}>
         {article.description}
       </p>
 
-      {/* CTA */}
-      <a
-        href={article.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 text-[10px] font-black text-brand-primary uppercase tracking-widest group-hover:gap-3 transition-all"
-        title={`Read: ${article.title}`}
-      >
-        Read Article
-        <ExternalLink size={14} />
-      </a>
+      {/* AI Smart Summary */}
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden mb-6"
+          >
+            <div className="p-4 rounded-2xl bg-brand-primary/5 border border-brand-primary/20 relative mt-2">
+              <div className="flex items-center gap-2 text-brand-primary mb-2 font-bold text-xs uppercase tracking-widest">
+                <Sparkles size={14} />
+                AI Summary
+              </div>
+              {isSummarizing ? (
+                <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                  <Loader2 className="animate-spin" size={16} />
+                  Analyzing context...
+                </div>
+              ) : (
+                <p className="text-sm text-foreground leading-relaxed">
+                  {aiSummary}
+                </p>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="mt-auto pt-4 flex items-center justify-between border-t border-border/50">
+        <button
+          onClick={handleSummarize}
+          className="flex items-center gap-2 text-[10px] font-black text-foreground uppercase tracking-widest hover:text-brand-primary transition-colors"
+        >
+          {isExpanded ? (
+            <><ChevronUp size={14} /> Close</>
+          ) : (
+            <><Bot size={14} className="text-brand-primary" /> Auto-Summarize</>
+          )}
+        </button>
+        {/* CTA */}
+        <a
+          href={article.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-[10px] font-black text-brand-primary uppercase tracking-widest hover:gap-3 transition-all"
+          title={`Read: ${article.title}`}
+        >
+          Source
+          <ExternalLink size={14} />
+        </a>
+      </div>
     </motion.div>
   );
 }
