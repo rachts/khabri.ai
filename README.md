@@ -21,39 +21,6 @@ khabri.ai is a premium, AI-driven news verification platform designed to combat 
 - **Data Sourcing**: [Serper.dev](https://serper.dev/) (Google Search API)
 - **Theming**: [next-themes](https://github.com/pacocoursey/next-themes)
 
-## 🚀 Getting Started
+## 📝 Note
 
-### Prerequisites
-
-- Node.js 18+
-- A [Serper.dev](https://serper.dev/) API Key
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/rachts/khabri.ai.git
-   cd khabri-ai
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Set up environment variables:
-   Create a `.env.local` file in the root directory:
-   ```env
-   SERPER_API_KEY=your_serper_api_key_here
-   ```
-
-4. Run the development server:
-   ```bash
-   npm run dev
-   ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## 📝 License
-
-This project is licensed under the MIT License.
+This repository is proprietary and not intended for public use or distribution. The source code is provided for portfolio demonstration purposes only.

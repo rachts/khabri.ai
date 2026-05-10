@@ -67,9 +67,9 @@ export default function Home() {
             k.ai
           </div>
           
-          <h1 className="text-7xl md:text-9xl font-black text-foreground tracking-tighter leading-[0.85] mb-6">
+          <h1 className="text-7xl md:text-9xl font-black text-foreground tracking-tighter leading-[0.85] mb-6 drop-shadow-lg">
             Verify the news before <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent italic">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent italic drop-shadow-xl">
               it verifies you.
             </span>
           </h1>
@@ -200,6 +200,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row items-center gap-10 relative z-10">
                   <div className="shrink-0 relative">
                     <div className="w-40 h-40 rounded-[2.5rem] overflow-hidden border-4 border-brand-primary/20 shadow-2xl relative z-10">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img 
                         src={founder.image} 
                         alt={founder.name} 
@@ -257,7 +258,7 @@ export default function Home() {
             <Link href="/ai-principles" className="text-muted-foreground hover:text-brand-primary text-sm font-black uppercase tracking-widest transition-colors">AI Principles</Link>
             <Link href="/transparency" className="text-muted-foreground hover:text-brand-primary text-sm font-black uppercase tracking-widest transition-colors">Transparency</Link>
             <Link href="/newsroom" className="text-muted-foreground hover:text-brand-primary text-sm font-black uppercase tracking-widest transition-colors">Newsroom</Link>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-brand-primary text-sm font-black uppercase tracking-widest transition-colors">GitHub</a>
+            <a href="https://github.com/rachts/khabri.ai" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-brand-primary text-sm font-black uppercase tracking-widest transition-colors">GitHub</a>
           </div>
 
           <div className="pt-12 border-t border-border w-full flex flex-col md:flex-row justify-between items-center gap-6">
